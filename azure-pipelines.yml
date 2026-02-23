@@ -6,7 +6,7 @@
 trigger: none
 
 pool:
-  vmImage: ubuntu-latest
+  name: AKS Agent
 
 steps:
 - task: TerraformCLI@0
@@ -19,14 +19,14 @@ steps:
   displayName: Terraform Plan
   inputs:
     command: 'plan'
-    environmentServiceName: 'youtube-app-service-connection'
+    environmentServiceName: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
     allowTelemetryCollection: false
 
 - task: TerraformCLI@0
   displayName: Terraform Apply
   inputs:
     command: 'apply'
-    environmentServiceName: 'youtube-app-service-connection'
+    environmentServiceName: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
     allowTelemetryCollection: true
 
 
