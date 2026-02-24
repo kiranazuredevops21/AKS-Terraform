@@ -32,15 +32,14 @@ resource "azurerm_subnet" "aks_subnet" {
 }
 
 
-resource "azurerm_resource_group" "aks_rg" {
-  name     = var.resource_group
-  location = var.azure_region
+data "azurerm_resource_group" "aks_rg" {
+  name = var.resource_group
 }
 
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
   name                = var.cluster_name
   location            = azurerm_resource_group.aks_rg.location
-  resource_group_name = azurerm_resource_group.aks_rg.name
+  resource_group_name = data.azurerm_resource_group.aks_rg.name
   dns_prefix          = var.dns_name
 
 
