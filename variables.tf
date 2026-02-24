@@ -1,28 +1,69 @@
-variable "resource_group" {}
-variable "azure_region" {}
+variable "aks_vnet_name" {
+    type = string
+}
 
-variable "keyvault_name" {}
-variable "keyvault_rg" {}
-variable "sshkvsecret" {}
+variable "keyvault_rg" {
+  type    = string
+}
+variable "keyvault_name" {
+  type    = string
+}
 
-variable "aks_vnet_name" {}
+variable "sshkvsecret" {
+  type    = string
+}
+
+variable "clientidkvsecret" {
+  type    = string
+}
+
 variable "vnetcidr" {
-  type = list(string)
+  type    = list
 }
 
 variable "subnetcidr" {
-  type = list(string)
+  type    = list
 }
 
-variable "cluster_name" {}
-variable "dns_name" {}
-variable "admin_username" {}
+variable "spnkvsecret" {
+  type    = string
+}
 
+variable "azure_region" {
+  type    = string
+}
+
+#  Resource Group Name
+variable "resource_group" {
+  type    = string
+}
+
+# AKS Cluster name
+variable "cluster_name" {
+  type    = string
+}
+
+#AKS DNS name
+variable "dns_name" {
+  type    = string
+}
+
+variable "admin_username" {
+  type    = string
+}
+
+# Specify a valid kubernetes version
+variable "kubernetes_version" {
+  type    = string
+}
+
+#AKS Agent pools
 variable "agent_pools" {
   type = object({
-    name            = string
-    count           = number
-    vm_size         = string
-    os_disk_size_gb = number
-  })
+      name            = string
+      count           = number
+      vm_size         = string
+      os_disk_size_gb = string
+    }
+  )
 }
