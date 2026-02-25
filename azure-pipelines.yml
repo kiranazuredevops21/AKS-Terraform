@@ -1,32 +1,39 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
 trigger: none
 
 pool:
   name: AKS Agent
 
+variables:
+  terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
+
 steps:
-- task: TerraformCLI@0
+
+- task: TerraformTaskV4@4
   displayName: Terraform Init
   inputs:
+    provider: 'azurerm'
     command: 'init'
-    allowTelemetryCollection: true
+    workingDirectory: '$(terraformWorkingDirectory)'
+    backendServiceArm: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
+    backendAzureRmResourceGroupName: 'tfstate-rg'
+    backendAzureRmStorageAccountName: 'tfstatestorage'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform.tfstate'
 
-- task: TerraformCLI@0
+- task: TerraformTaskV4@4
   displayName: Terraform Plan
   inputs:
+    provider: 'azurerm'
     command: 'plan'
-    environmentServiceName: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
-    allowTelemetryCollection: false
+    workingDirectory: '$(terraformWorkingDirectory)'
+    environmentServiceNameAzureRM: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
 
-- task: TerraformCLI@0
+- task: TerraformTaskV4@4
   displayName: Terraform Apply
   inputs:
+    provider: 'azurerm'
     command: 'apply'
-    environmentServiceName: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
-    allowTelemetryCollection: true
-
+    workingDirectory: '$(terraformWorkingDirectory)'
+    environmentServiceNameAzureRM: 'Azure subscription 1(afd85edf-13c9-4faa-99be-bf7468ed2149)'
 
